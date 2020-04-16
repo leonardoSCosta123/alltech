@@ -7,7 +7,7 @@ $(document).ready(function(){
     jQuery.validator.addMethod('answercheck', function (value, element) {
         return this.optional(element) || /^\bcat\b$/.test(value)
     }, "type the correct answer -_-");
-
+    $('#sucesso').hide();
     // validate contactForm form
     $(function() {
         $('#contactForm').validate({
@@ -18,11 +18,11 @@ $(document).ready(function(){
                 },
                 subject: {
                     required: true,
-                    minlength: 4
+                    minlength: 5
                 },
                 number: {
                     required: true,
-                    minlength: 5
+                    minlength: 11
                 },
                 email: {
                     required: true,
@@ -35,23 +35,23 @@ $(document).ready(function(){
             },
             messages: {
                 name: {
-                    required: "come on, you have a name, don't you?",
-                    minlength: "your name must consist of at least 2 characters"
+                    required: "Informe seu nome",
+                    minlength: "O nome deve conter pelo menos 2 letras"
                 },
                 subject: {
-                    required: "come on, you have a subject, don't you?",
-                    minlength: "your subject must consist of at least 4 characters"
+                    required: "Informe o título",
+                    minlength: "O título deve conter pelo menos 5 letras"
                 },
                 number: {
-                    required: "come on, you have a number, don't you?",
-                    minlength: "your Number must consist of at least 5 characters"
+                    required: "Informe o telefone de contato",
+                    minlength: "Informe o número DD999999999"
                 },
                 email: {
-                    required: "no email, no message"
+                    required: "Informe o e-mail"
                 },
                 message: {
-                    required: "um...yea, you have to write something to send this form.",
-                    minlength: "thats all? really?"
+                    required: "Informe a observação",
+                    minlength: "Não foi claro, poderia informar algo mais?"
                 }
             },
             submitHandler: function(form) {
@@ -60,20 +60,19 @@ $(document).ready(function(){
                     data: $(form).serialize(),
                     url:"contact_process.php",
                     success: function() {
-                        $('#contactForm :input').attr('disabled', 'disabled');
+                        // $('#contactForm :input').attr('disabled', 'disabled');
                         $('#contactForm').fadeTo( "slow", 1, function() {
                             $(this).find(':input').attr('disabled', 'disabled');
                             $(this).find('label').css('cursor','default');
                             $('#success').fadeIn()
-                            $('.modal').modal('hide');
-		                	$('#success').modal('show');
+                           $('#sucesso').show();
                         })
                     },
                     error: function() {
                         $('#contactForm').fadeTo( "slow", 1, function() {
                             $('#error').fadeIn()
-                            $('.modal').modal('hide');
-		                	$('#error').modal('show');
+                            $('#sucesso').hide();
+                           
                         })
                     }
                 })

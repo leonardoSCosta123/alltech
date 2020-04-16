@@ -61,7 +61,7 @@ if ($Mailer->Send()) {
 //                                   </div>
 //                               </div>";
 } else {
-	echo "Ops!! O servidor parou.".'Dados do contato :'.$cmessage.'\n Nome :'.$name.'\n e-mail : '.$from.'\n Telefone : '.$number;
+	// echo "Ops!! O servidor parou.".'Dados do contato :'.$cmessage.'\n Nome :'.$name.'\n e-mail : '.$from.'\n Telefone : '.$number;
 }
 
 
