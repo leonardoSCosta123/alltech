@@ -1,37 +1,68 @@
 <?php
 
-    $to = "rockybd1995@gmail.com";
-    $from = $_REQUEST['email'];
-    $name = $_REQUEST['name'];
-    $subject = $_REQUEST['subject'];
-    $number = $_REQUEST['number'];
-    $cmessage = $_REQUEST['message'];
+$to = "leonardoocosta123@gmail.com";
+$from = $_POST['email'];
+$name = $_POST['name'];
+$subject = $_POST['subject'];
+$number = $_POST['number'];
+$cmessage = $_POST['message'];
 
-    $headers = "From: $from";
-	$headers = "From: " . $from . "\r\n";
-	$headers .= "Reply-To: ". $from . "\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+require 'PHPMailer/PHPMailerAutoload.php';
 
-    $subject = "You have a message from your Bitmap Photography.";
+$Mailer = new PHPMailer();
 
-    $logo = 'img/logo.png';
-    $link = '#';
+//Define que serÃ¡ usado SMTP
+$Mailer->IsSMTP();
 
-	$body = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><title>Express Mail</title></head><body>";
-	$body .= "<table style='width: 100%;'>";
-	$body .= "<thead style='text-align: center;'><tr><td style='border:none;' colspan='2'>";
-	$body .= "<a href='{$link}'><img src='{$logo}' alt=''></a><br><br>";
-	$body .= "</td></tr></thead><tbody><tr>";
-	$body .= "<td style='border:none;'><strong>Name:</strong> {$name}</td>";
-	$body .= "<td style='border:none;'><strong>Email:</strong> {$from}</td>";
-	$body .= "</tr>";
-	$body .= "<tr><td style='border:none;'><strong>Subject:</strong> {$csubject}</td></tr>";
-	$body .= "<tr><td></td></tr>";
-	$body .= "<tr><td colspan='2' style='border:none;'>{$cmessage}</td></tr>";
-	$body .= "</tbody></table>";
-	$body .= "</body></html>";
+//Enviar e-mail em HTML
+$Mailer->isHTML(true);
 
-    $send = mail($to, $subject, $body, $headers);
+//Aceitar carasteres especiais
+$Mailer->Charset = 'UTF-8';
+
+//ConfiguraÃ§Ãµes
+$Mailer->SMTPAuth = true;
+$Mailer->SMTPSecure = 'ssl';
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
+//nome do servidor
+$Mailer->Host = 'smtp.gmail.com';
+//Porta de saida de e-mail
+$Mailer->Port = 587;
+
+//Dados do e-mail de saida - autenticaÃ§Ã£o
+$Mailer->Username = 'contatositeconsultoria@gmail.com';
+$Mailer->Password = 'contatosite123';
+
+//E-mail remetente (deve ser o mesmo de quem fez a autenticaÃ§Ã£o)
+$Mailer->From = 'contatositeconsultoria@gmail.com';
+
+//Nome do Remetente
+$Mailer->FromName = $subject;
+
+//Assunto da mensagem
+$Mailer->Subject = $subject;
+
+//Corpo da Mensagem
+$Mailer->Body = 'Dados do contato :'.$cmessage.'\n Nome :'.$name.'\n e-mail : '.$from.'\n Telefone : '.$number;
+
+//Corpo da mensagem em texto
+$Mailer->AltBody = 'Dados do contato :'.$cmessage.'\n Nome :'.$name.'\n e-mail : '.$from.'\n Telefone : '.$number;
+
+//Destinatario
+$Mailer->AddAddress($to);
+
+if ($Mailer->Send()) {
+	echo "E-mail enviado com sucesso";
+//         $_SESSION["sucesso1"] = "<div class=\"container\">
+//                                   <div class=\"alert alert-success\">
+//                                     <strong>Sucesso!</strong>Sua senha foi enviada para seu email !!.
+//                                   </div>
+//                               </div>";
+} else {
+	echo "Ops!! O servidor parou.".'Dados do contato :'.$cmessage.'\n Nome :'.$name.'\n e-mail : '.$from.'\n Telefone : '.$number;
+}
+
 
 ?>
