@@ -47,7 +47,8 @@ $(document).ready(function(){
                     minlength: "Informe o número DD999999999"
                 },
                 email: {
-                    required: "Informe o e-mail"
+                    required: "Informe o e-mail",
+                    email : "Informe um e-mail válido"
                 },
                 message: {
                     required: "Informe a observação",
@@ -60,7 +61,6 @@ $(document).ready(function(){
                     data: $(form).serialize(),
                     url:"contact_process.php",
                     success: function() {
-                        // $('#contactForm :input').attr('disabled', 'disabled');
                         $('#contactForm').fadeTo( "slow", 1, function() {
                             $(this).find(':input').attr('disabled', 'disabled');
                             $(this).find('label').css('cursor','default');
